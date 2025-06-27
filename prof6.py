@@ -29,7 +29,7 @@ def profession():
         elif profession == "Police":
             message = f"cette rubrique concerne le : {profession}. {lire_texte('police.txt')}"       
         else:
-            message = f"cette rubrique concerne le : {profession}."
+            message = f"cette rubrique n'existe pas : {profession}."
     return render_template("index.html", message=message)
 
 if __name__ == "__main__":
