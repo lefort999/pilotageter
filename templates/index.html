@@ -1,58 +1,89 @@
-Flask 
-
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Recherche Généalogique</title>
+    <meta charset="UTF-8">
+    <title>Moteur généalogique</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 30px;
             text-align: center;
-            background-color: #f4f4f4;
-            color: blue
-            padding: 20px;
-        }
-        h1 {
             color: #2c3e50;
         }
+
         form {
-            margin-top: 20px;
+            display: inline-block;
+            text-align: left;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        input[type="text"] {
-            padding: 8px;
-            width: 200px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
         }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 250px;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .checkboxes label {
+            font-weight: normal;
+            display: block;
+            margin-top: 5px;
+        }
+
         button {
-            padding: 10px 15px;
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
             background-color: #2980b9;
             color: white;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
+            font-size: 16px;
         }
-        button:hover {
-            background-color: #3498db;
-        }
+
         .message {
             margin-top: 20px;
-            font-size: 12px;
-            color: red;
+            font-size: 14px;
+            color: darkgreen;
         }
     </style>
 </head>
 <body>
-   
+    <h2>Moteur de déduction généalogique</h2>
+    <form method="post" action="/analyse">
+        <label>Profession :</label><input type="text" name="profession">
+        <label>Année de naissance :</label><input type="number" name="naissance">
+        <label>Année de mariage :</label><input type="number" name="mariage">
+        <label>Année de décès :</label><input type="number" name="deces">
+        <label>Lieu de naissance :</label><input type="text" name="lieu_naissance">
+        <label>Lieu de mariage :</label><input type="text" name="lieu_mariage">
+        <label>Lieu de décès :</label><input type="text" name="lieu_deces">
+        <label>CP naissance :</label><input type="text" name="cp_naissance">
+        <label>CP mariage :</label><input type="text" name="cp_mariage">
+        <label>CP décès :</label><input type="text" name="cp_deces">
 
-    <h2>Recherche généalogique: Entrez votre recherche avec un mot clé par exemple région ou enregistrement ou notaire :</h2>
-    <form method="post" action="/profession">
-        <input type="text" name="profession" placeholder="Ex: militaire, fisc">
-        <button type="submit">Tester</button>
+        <div class="checkboxes">
+            <label><input type="checkbox" name="militaire"> Militaire</label>
+            <label><input type="checkbox" name="blesse"> Blessé</label>
+            <label><input type="checkbox" name="officier"> Officier</label>
+            <label><input type="checkbox" name="celibataire"> Célibataire</label>
+            <label><input type="checkbox" name="etatcivil"> Acte d'état civil complet</label>
+        </div>
+
+        <button type="submit">Analyser</button>
     </form>
 
     {% if message %}
     <p class="message">{{ message }}</p>
     {% endif %}
 </body>
-</html>
