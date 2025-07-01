@@ -19,8 +19,9 @@ def analyse():
     officier = "officier" in request.form
     celibataire = "celibataire" in request.form
     etatcivil = "etatcivil" in request.form
+    doc = request.form.get("documentation", "").lower()
 
-    # Exemple de quelques règles simples
+    # Règles personnalisées
     if prof == "douanier" and naissance and 1760 < naissance < 1810:
         msg.append("📂 Douanier né entre 1760–1810 : dossier aux Archives nationales (F/12, F/14).")
 
@@ -36,10 +37,28 @@ def analyse():
     if celibataire and etatcivil:
         msg.append("📜 Célibataire avec état civil complet : regarder les mentions marginales et les actes notariés.")
 
+    # Ajout de documentation
+    documents = {
+        "fisc": "💶 Fisc",
+        "cadastre": "🗺️ Cadastre",
+        "notaire": "✍️ Notaire",
+        "militaire": "🎖️ Militaire",
+        "administration": "🏛️ Administration"
+    }
+
+    for mot_cle, titre in documents.items():
+        if mot_cle in doc:
+            try:
+                with open(f"docs/{mot_cle}.txt", encoding="utf-8") as f:
+                    contenu = f.read()
+                msg.append(f"{titre} :<br>{contenu}")
+            except FileNotFoundError:
+                msg.append(f"❌ Le fichier {mot_cle}.txt est introuvable.")
+
     if not msg:
         msg.append("🤷 Aucune règle déclenchée. Essayez d’élargir ou croiser d'autres critères.")
 
-    return render_template("index.html", message="<br>".join(msg))
+    return render_template("index.html", message="<br><br>".join(msg))
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
