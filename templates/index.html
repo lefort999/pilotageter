@@ -77,7 +77,15 @@ Flask
             <option value="notaire">Notaire</option>
 			<option value="enregistrement">Enregistrement</option>
         </select>
+		
+       <label for="naissance">Année de naissance :</label>
+       <input type="number" name="naissance" id="naissance" min="1600" max="2025" />
 
+      <label for="lieu">Lieu de naissance :</label>
+      <input type="text" name="lieu" id="lieu" placeholder="ex. Alsace" />
+	  
+	  <label for="profession">Profession :</label>
+      <input type="text" name="profession" id="profession" placeholder="ex. douanier" />
         <button type="submit">Tester</button>
     </form>
 
