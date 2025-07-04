@@ -30,10 +30,7 @@ def profession():
             message = f"cette rubrique concerne le : {profession}. {lire_texte('police.txt')}"  
         elif profession == "notaire":
             message = f"cette rubrique concerne le : {profession}. {lire_texte('notaire.txt')}"      
-        elif profession == "enregistrement":
-            message = f"cette rubrique concerne le : {profession}. {lire_texte('enregistrement.txt')}" 
-        elif profession == "scolaire":
-            message = f"cette rubrique concerne le : {profession}. {lire_texte('scolaire.txt')}"       			
+             			
         else:
             message = f"cette rubrique n'existe pas : {profession}."
     return render_template("index.html", message=message)
