@@ -25,11 +25,12 @@ def analyse():
     naissance = request.form.get("naissance", type=int)
     lieu = request.form.get("lieu_naissance", "").lower()
 
-    militaire = "militaire" in request.form
-    blesse = "blesse" in request.form
-    officier = "officier" in request.form
-    celibataire = "celibataire" in request.form
-    etatcivil = "etatcivil" in request.form
+    caracteristiques = request.form.getlist("caracteristiques")
+    militaire = "militaire" in caracteristiques
+    blesse = "blesse" in caracteristiques
+    officier = "officier" in caracteristiques
+    celibataire = "celibataire" in caracteristiques
+    etatcivil = "etatcivil" in caracteristiques
     doc_keywords = request.form.getlist("documentation")
 
     # 🧠 Analyse des règles
