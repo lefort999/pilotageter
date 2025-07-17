@@ -50,7 +50,7 @@ def analyse():
         msg.append("🎖️ Militaire blessé et officier : dossier militaire approfondi recommandé.")
 
     
-    if "celibataire" in caracteristiques:
+    if "celibataire" in celibataire:
         msg.append("📜 Célibataire avec acte complet : vérifier les mentions marginales ou notariées.")
 
     # 📂 Chargement des fichiers documentaires
