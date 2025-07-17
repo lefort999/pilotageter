@@ -53,16 +53,20 @@ def analyse():
     if "celibataire" in celibataire:
         msg.append("📜 Célibataire avec acte complet : vérifier les mentions marginales ou notariées.")
 
-    # 📂 Chargement des fichiers documentaires
-    for doc in documentation:
-        fichier = f"{doc}.txt"
-        contenu = lire_texte(fichier).replace("\n", "<br>")
-        msg.append(f"📘 <strong>{fichier}</strong><br>{contenu}")
+   # 📄 Chargement des fichiers documentaire demandés
+for mot_cle in doc_keywords:
+    # Nettoyage du nom de fichier
+    nom_fichier = f"{mot_cle.strip().lower().replace(' ', '_')}.txt"
+    try:
+        with open(nom_fichier, encoding="utf-8") as f:
+            contenu = f.read().replace("\n", "<br>")
+        msg.append(f"📄 <strong>{nom_fichier}</strong> :<br>{contenu}")
+    except FileNotFoundError:
+        msg.append(f"❌ Le fichier <strong>{nom_fichier}</strong> est introuvable.")
 
-    if not msg:
-        msg.append("🤷 Aucune règle détectée.")
-
-    return render_template("index.html", message="<br>".join(msg))
+# 🕵️ Si aucune règle ne s'applique
+if not msg:
+    msg.append("🤷 Aucune règle déclenchée.")
 
 @app.route("/profession", methods=["POST"])
 def profession():
