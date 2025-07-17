@@ -68,16 +68,7 @@ for mot_cle in doc_keywords:
 if not msg:
     msg.append("🤷 Aucune règle déclenchée.")
 
-@app.route("/profession", methods=["POST"])
-def profession():
-    rubrique = request.form.get("lecture", "").lower()
-    if rubrique in ["militaire", "fisc", "cadastre", "police", "notaire", "administration", "enigme"]:
-        contenu = lire_texte(f"{rubrique}.txt").replace("\n", "<br>")
-        message = f"📘 Rubrique : <strong>{rubrique}</strong><br>{contenu}"
-    else:
-        message = f"❌ Rubrique inconnue : <strong>{rubrique}</strong>"
 
-    return render_template("index.html", lecture_result=message)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
