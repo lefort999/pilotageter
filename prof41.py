@@ -53,7 +53,7 @@ def analyse():
     if "celibataire" in celibataire:
         msg.append("📜 Célibataire avec acte complet : vérifier les mentions marginales ou notariées.")
 
-   # 📄 Chargement des fichiers documentaire demandés
+   # 📄 Chargements des fichiers documentaire demandés
 for mot_cle in doc_keywords:
     # Nettoyage du nom de fichier
     nom_fichier = f"{mot_cle.strip().lower().replace(' ', '_')}.txt"
