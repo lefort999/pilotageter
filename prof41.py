@@ -49,7 +49,8 @@ def analyse():
     if "militaire" in caracteristiques and "officier" in caracteristiques and "blesse" in caracteristiques:
         msg.append("🎖️ Militaire blessé et officier : dossier militaire approfondi recommandé.")
 
-    if "etatcivil" in caracteristiques and "celibataire" in caracteristiques:
+    
+    if "celibataire" in caracteristiques:
         msg.append("📜 Célibataire avec acte complet : vérifier les mentions marginales ou notariées.")
 
     # 📂 Chargement des fichiers documentaires
