@@ -1,75 +1,63 @@
+
 from flask import Flask, request, render_template
 import os
 
 app = Flask(__name__)
 
-# 🔧 Lecture de texte brut
+# 🔹 Fonction utilitaire
 def lire_texte(nom_fichier):
+    """Lit le contenu d'un fichier texte."""
     try:
-        with open(nom_fichier, "r", encoding="utf-8") as f:
-            return f.read()
+        with open(nom_fichier, "r", encoding="utf-8") as fichier:
+            return fichier.read()
     except FileNotFoundError:
-        return "⚠️ Fichier non trouvé."
+        return "⚠️ Information non disponible."
 
+# 🔹 Route principale
 @app.route("/")
 def home():
     return render_template("index.html")
 
+# 🔹 Traitement du formulaire d’analyse
 @app.route("/analyse", methods=["POST"])
 def analyse():
     msg = []
 
-    # 🔍 Champs principaux
+    # 🔎 Extraction des données du formulaire
     prof = request.form.get("profession", "").lower()
     naissance = request.form.get("naissance", type=int)
-    mariage = request.form.get("mariage", type=int)
-    deces = request.form.get("deces", type=int)
+    lieu = request.form.get("lieu_naissance", "").lower()
 
-    lieu_naissance = request.form.get("lieu_naissance", "").lower()
-    cp_naissance = request.form.get("cp_naissance", "")
-    lieu_mariage = request.form.get("lieu_mariage", "").lower()
-    cp_mariage = request.form.get("cp_mariage", "")
-    lieu_deces = request.form.get("lieu_deces", "").lower()
-    cp_deces = request.form.get("cp_deces", "")
-
-    # 🎛️ Cases à cocher
+    # ✅ Récupération des caractéristiques (select multiple)
     caracteristiques = request.form.getlist("caracteristiques")
-    documentation = request.form.getlist("documentation")
+    militaire = "militaire" in caracteristiques
+    blesse = "blesse" in caracteristiques
+    officier = "officier" in caracteristiques
+    celibataire = "celibataire" in caracteristiques
+    etatcivil = "etatcivil" in caracteristiques
 
-    # 🧠 Exemples de règles
+    # 📚 Récupération des mots-clés documentaires (select multiple)
+    doc_keywords = request.form.getlist("documentation")
+
+    # 📜 Analyse des règles généalogiques
     if prof == "douanier" and naissance and 1760 < naissance < 1810:
-        msg.append("📁 Douanier entre 1760–1810 : voir les Archives nationales (F/12, F/14).")
+        msg.append("📂 Douanier né entre 1760–1810 : dossier aux Archives nationales (F/12, F/14).")
 
-    if "alsace" in lieu_naissance and naissance and 1870 < naissance < 1918:
-        msg.append("🪖 Né en Alsace entre 1870 et 1918 : consulter ANOM ou les archives allemandes.")
+    if "alsace" in lieu and naissance and 1870 < naissance < 1918:
+        msg.append("🇩🇪 Né en Alsace entre 1870 et 1918 : consulter ANOM ou archives allemandes.")
 
     if prof == "orfèvre":
-        msg.append("💍 Orfèvre : consulter les registres des poinçons.")
+        msg.append("💎 Orfèvre : consulter les registres de poinçons.")
 
-    if "militaire" in caracteristiques and "officier" in caracteristiques and "blesse" in caracteristiques:
-        msg.append("🎖️ Militaire blessé et officier : dossier militaire approfondi recommandé.")
+    if militaire or blesse or officier:
+        msg.append("🎖️ Militaire blessé/officier : consulter les registres militaires.")
+
+    if celibataire and etatcivil:
+        msg.append("📜 Célibataire avec acte complet : voir actes notariés et mentions marginales.")
 
     
-    if "celibataire" in celibataire:
-        msg.append("📜 Célibataire avec acte complet : vérifier les mentions marginales ou notariées.")
 
-   # 📄 Chargements des fichiers documentaire demandés
-for mot_cle in doc_keywords:
-    # Nettoyage du nom de fichier
-    nom_fichier = f"{mot_cle.strip().lower().replace(' ', '_')}.txt"
-    try:
-        with open(nom_fichier, encoding="utf-8") as f:
-            contenu = f.read().replace("\n", "<br>")
-        msg.append(f"📄 <strong>{nom_fichier}</strong> :<br>{contenu}")
-    except FileNotFoundError:
-        msg.append(f"❌ Le fichier <strong>{nom_fichier}</strong> est introuvable.")
-
-# 🕵️ Si aucune règle ne s'applique
-if not msg:
-    msg.append("🤷 Aucune règle déclenchée.")
-
-
-
+# 🔹 Exécution de l’application Flask
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
