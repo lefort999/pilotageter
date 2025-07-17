@@ -1,98 +1,39 @@
-Flask
- 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Recherche Généalogique</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            color: #2c3e50;
-            padding: 20px;
-        }
+<form method="post" action="/profession">
+    <h3>🎯 Profession principale</h3>
+    <label for="profession_select">Choisissez une profession :</label>
+    <select name="lecture" id="profession_select">
+        <option value="militaire">Militaire</option>
+        <option value="fisc">Fisc</option>
+        <option value="cadastre">Cadastre</option>
+        <option value="police">Police</option>
+        <option value="notaire">Notaire</option>
+        <option value="enregistrement">Enregistrement</option>
+        <option value="scolaire">Scolaire</option>
+    </select>
 
-        h2 {
-            color: #2c3e50;
-        }
+    <h3>📆 Informations personnelles</h3>
+    <label for="naissance">Année de naissance :</label>
+    <input type="number" name="naissance" id="naissance" min="1600" max="2025" />
 
-        form {
-            margin-top: 30px;
-            display: inline-block;
-            text-align: left;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    <label for="lieu">Lieu de naissance :</label>
+    <input type="text" name="lieu_naissance" id="lieu" placeholder="ex. Alsace" />
 
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 8px;
-        }
+    <label for="profession_text">Profession :</label>
+    <input type="text" name="profession" id="profession_text" placeholder="ex. douanier" />
 
-        select {
-            width: 250px;
-            padding: 8px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
+    <h3>📌 Caractéristiques</h3>
+    <label>Choisissez les caractéristiques :</label><br>
+    <input type="checkbox" name="caracteristiques" value="militaire"> Militaire<br>
+    <input type="checkbox" name="caracteristiques" value="officier"> Officier<br>
+    <input type="checkbox" name="caracteristiques" value="blesse"> Blessé<br>
+    <input type="checkbox" name="caracteristiques" value="etatcivil"> État civil<br>
+    <input type="checkbox" name="caracteristiques" value="celibataire"> Célibataire<br>
 
-        button {
-            width: 100%;
-            padding: 10px 15px;
-            background-color: #2980b9;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
+    <h3>📚 Documentation souhaitée</h3>
+    <label>Choisissez les documents à afficher :</label><br>
+    <input type="checkbox" name="documentation" value="f12"> F/12<br>
+    <input type="checkbox" name="documentation" value="f14"> F/14<br>
+    <input type="checkbox" name="documentation" value="poincons"> Registre des poinçons<br>
 
-        button:hover {
-            background-color: #3498db;
-        }
-
-        .message {
-            margin-top: 20px;
-            font-size: 13px;
-            color: red;
-        }
-    </style>
-</head>
-<body>
-    
-    <h2>Recherche généalogique : choisissez une profession pour consulter les archives associées</h2>
-
-    <form method="post" action="/profession">
-        <label for="profession">Choisissez une profession :</label>
-        <select name="profession" id="profession">
-            <option value="militaire">Militaire</option>
-            <option value="fisc">Fisc</option>
-            <option value="cadastre">Cadastre</option>
-            <option value="police">Police</option>
-            <option value="notaire">Notaire</option>
-			<option value="enregistrement">Enregistrement</option>
-			<option value="scolaire">Scolaire</option>
-        </select>
-		
-       <label for="naissance">Année de naissance :</label>
-       <input type="number" name="naissance" id="naissance" min="1600" max="2025" />
-
-      <label for="lieu">Lieu de naissance :</label>
-      <input type="text" name="lieu" id="lieu" placeholder="ex. Alsace" />
-	  
-	  <label for="profession">Profession :</label>
-      <input type="text" name="profession" id="profession" placeholder="ex. douanier" />
-        <button type="submit">Tester</button>
-    </form>
-
-    {% if message %}
-    <p class="message">{{ message }}</p>
-    {% endif %}
-
-</body>
-</html>
+    <button type="submit">🔎 Rechercher</button>
+</form>
